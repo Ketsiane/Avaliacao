@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: avaliacao # nome da api de vocês
+    env: docker
+    plan: free
+    region: oregon
+    buildCommand: ""
+    startCommand: ""
+    rootDir: .
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL
+        sync: false
