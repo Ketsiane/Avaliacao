@@ -1,29 +1,26 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from app.routers import produtos
-from app.database import create_db_and_tables # Importa a função de criação de tabelas
+from app.routers import fila as fila_router # Importa o novo router de fila
+from app.database import create_db_and_tables # Reutiliza a função de criação de DB
 
-# 1. NOVO PADRÃO: Define o ciclo de vida da aplicação (startup e shutdown)
+# 1. Define o ciclo de vida da aplicação (executa antes de iniciar o servidor)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Lógica de STARTUP (Executada antes de o servidor aceitar requisições)
-    print("Iniciando Microsserviço: Criando tabelas no banco de dados...")
+    # Lógica de STARTUP: Cria as tabelas
+    print("Iniciando API Fila: Criando tabelas no banco de dados...")
     create_db_and_tables()
     yield
-    # Lógica de SHUTDOWN (Executada quando o servidor está desligando)
-    print("Microsserviço desligado.")
-    # Você adicionaria a lógica de fechamento de conexões se necessário aqui.
+    # Lógica de SHUTDOWN (opcional)
+    print("API Fila desligada.")
 
-
-# 2. INSTÂNCIA: Passa a função lifespan para o FastAPI
 app = FastAPI(
-    title="API de Produtos - FastAPI + Render", 
-    lifespan=lifespan # Usa o novo padrão
+    title="API Fila de Atendimento - Totem", 
+    lifespan=lifespan 
 )
 
-# 3. ROTAS: Inclui o router de produtos
-app.include_router(produtos.router)
+# Inclui o router de fila
+app.include_router(fila_router.router) 
 
 @app.get("/")
 def home():
-    return {"message": "API de Produtos - FastAPI + PostgreSQL no Render"}
+    return {"message": "API Fila de Atendimento - OK"}
