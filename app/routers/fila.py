@@ -28,7 +28,6 @@ def update_positions(session: Session, start_pos: int, delta: int):
 
 # --- Endpoints ---
 
-# Adicionado: Rota de Reset Total (DEVE VIR ANTES da rota /{posicao})
 @router.delete("/reset", status_code=status.HTTP_204_NO_CONTENT)
 def reset_fila(session: Session = Depends(get_session)):
     """
@@ -55,7 +54,7 @@ def adicionar_cliente(cliente_data: ClienteCreate, session: Session = Depends(ge
     
     # 1. BUSCA DA POSIÇÃO MÁXIMA TOTAL
     # O resultado pode ser um escalar (int ou None) ou uma tupla (int/None,).
-    # Usamos Union[Tuple[Optional[int]], Optional[int]] para tipagem.
+    
     resultado_total_row: Union[Tuple[Optional[int]], Optional[int]] = session.exec(
         select(func.max(Cliente.posicao))
         .where(Cliente.atendido == False)
@@ -69,7 +68,7 @@ def adicionar_cliente(cliente_data: ClienteCreate, session: Session = Depends(ge
         # Comportamento padrão: retorna uma tupla (max_pos,). Pega o primeiro elemento.
         ultima_pos_total = resultado_total_row[0] or 0
     else:
-        # Comportamento desempacotado (o que causou o erro): retorna um escalar (int).
+        # Comportamento desempacotado: retorna um escalar (int).
         ultima_pos_total = resultado_total_row or 0
     
     

@@ -6,11 +6,11 @@ from app.database import create_db_and_tables # Reutiliza a função de criaçã
 # 1. Define o ciclo de vida da aplicação (executa antes de iniciar o servidor)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Lógica de STARTUP: Cria as tabelas
+    
     print("Iniciando API Fila: Criando tabelas no banco de dados...")
     create_db_and_tables()
     yield
-    # Lógica de SHUTDOWN (opcional)
+    
     print("API Fila desligada.")
 
 app = FastAPI(

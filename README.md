@@ -2,7 +2,7 @@
 
 ## 🚀 Executar Localmente
 ```bash
-git clone https://github.com/seuusuario/fastapi-render.git
+git clone https://github.com/ketsiane/Avaliacao
 cd fastapi-render
 python -m venv .venv
 .venv\Scripts\activate  # Windows

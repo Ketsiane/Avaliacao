@@ -34,7 +34,7 @@ class ClienteRead(BaseModel):
         # Permite que o Pydantic mapeie os campos do SQLModel (que são orm_mode)
         from_attributes = True
 
-# Esquema para atualização (embora não usado no seu router atual, é bom ter)
+# Inclusão por boas práticas
 class ClienteUpdate(BaseModel):
     """
     Schema para atualizar campos de um cliente, todos opcionais.
